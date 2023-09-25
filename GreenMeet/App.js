@@ -1,49 +1,79 @@
-import React from 'react';
-import { View, ImageBackground, Text, StyleSheet } from 'react-native';
-import {  } from 'react-native-svg';
+import React, { useState, useEffect } from 'react';
+import { View, ImageBackground, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import * as Font from 'expo-font';
 
 export default function Accueil() {
-  return (
+  const [identifiant, setIdentifiant] = useState('');
+  const [motDePasse, setMotDePasse] = useState('');
+
+  const handleConnexion = () => {
+    // Gérer l'action lors de l'appui sur le bouton Connexion
+    console.log('Identifiant:', identifiant);
+    console.log('Mot de passe:', motDePasse);
+};
+
+    return (
     <View style={styles.accueil}>
       <ImageBackground
         style={styles.back_acceuil}
-        source={require('./components/back_acceuil.jpg')}
+        source={require('./assets/background.png')}
       />
       <ImageBackground
         style={styles.logo}
-        source={require('./components/image 34.png')}
+        source={require('./assets/image34.png')}
       />
-      <Text style={styles.title}>
-        {`Bienvenue sur GreenMeet`}
-      </Text>
+      <View style={styles.container}>
+        <Text style={[styles.customFontText, { fontFamily: 'Mulish-Bold' }]}>
+          {`Bienvenue sur GreenMeet`}
+        </Text>
+      </View>
       <View style={styles.group5}>
         <View style={styles.rectangle68} />
-        <Text style={styles.identifiant}>
-          {`Identifiant`}
-        </Text>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Saisissez votre identifiant"
+          onChangeText={text => setIdentifiant(text)}
+          value={identifiant}
+        />
       </View>
       <View style={styles.group6}>
         <View style={styles.rectangle67} />
-        <Text style={styles.subtitle}>
-          {`Mot de passe`}
-        </Text>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Saisissez votre mot de passe"
+          secureTextEntry={true} // Pour masquer le texte du mot de passe
+          onChangeText={text => setMotDePasse(text)}
+          value={motDePasse}
+        />
       </View>
-      {/* RN-Flow:: can be replaced with <SubmitButton  /> */}
-      <View style={styles.submitButton}>
+      {/* Bouton Connexion */}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleConnexion}
+      >
         <View style={styles.border} />
-        <Text style={styles._title}>
+        <Text style={styles.buttonText}>
           {`Connexion`}
         </Text>
-      </View>
-      <Text style={styles.__title}>
-        {`Me créer un compte`}
-      </Text>
+      </TouchableOpacity>
+      {/* Bouton Créer un compte */}
+      <TouchableOpacity
+        style={styles.button2}
+        onPress={() => {
+          // Gérer l'action lors de l'appui sur le bouton Créer un compte
+        }}
+      >
+        <View style={styles.border2} />
+        <Text style={styles.buttonText2}>
+          {`Me créer un compte`}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  	accueil: {
+  accueil: {
     flexShrink: 0,
     height: 844,
     width: 390,
@@ -51,15 +81,28 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     rowGap: 0
 },
+  customFontText: {
+    fontFamily: 'Mulish', // Utilisez le nom que vous avez spécifié lors du chargement de la police
+    fontSize: 25, // Ajoutez d'autres styles selon vos besoins
+    color: 'white',
+},
+  container: {
+    position: "absolute",
+    flexShrink: 0,
+    top: 100,
+    right: 70,
+    fontSize: 600,
+},
     back_acceuil: {
     position: "absolute",
     flexShrink: 0,
-    top: -1772,
-    left: -1220,
-    width: 2730,
-    height: 4096
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    height: 850,
 },
-  	logo: {
+  logo: {
     position: "absolute",
     flexShrink: 0,
     top: 722,
@@ -67,7 +110,7 @@ const styles = StyleSheet.create({
     bottom: 12,
     left: 138
 },
-  	title: {
+    title: {
     position: "absolute",
     flexShrink: 0,
     top: 82,
@@ -75,45 +118,21 @@ const styles = StyleSheet.create({
     left: 0,
     height: 40,
     textAlign: "center",
-    color: "rgba(255, 255, 255, 1)",
+    color: "white",
     fontFamily: "Mulish",
     fontSize: 32,
     fontWeight: "700",
     letterSpacing: 0.10867942869663239
 },
-  	group5: {
+    group5: {
     position: "absolute",
     flexShrink: 0,
     top: 280,
     height: 44,
     left: 33,
-    width: 332
-},
-  	rectangle68: {
-    position: "absolute",
-    flexShrink: 0,
     width: 332,
-    height: 44,
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    borderWidth: 1,
-    borderColor: "rgba(151, 151, 151, 1)",
-    borderRadius: 10
 },
-  	identifiant: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 13,
-    left: 130,
-    width: 67,
-    height: 18,
-    textAlign: "center",
-    color: "rgba(123, 123, 123, 1)",
-    fontFamily: "Mulish",
-    fontSize: 14,
-    fontWeight: "400",
-    letterSpacing: 0.10867942869663239
-},
-  	group6: {
+    group6: {
     position: "absolute",
     flexShrink: 0,
     top: 387,
@@ -121,17 +140,7 @@ const styles = StyleSheet.create({
     left: 32,
     width: 334
 },
-  	rectangle67: {
-    position: "absolute",
-    flexShrink: 0,
-    width: 334,
-    height: 44,
-    backgroundColor: "rgba(255, 255, 255, 1)",
-    borderWidth: 1,
-    borderColor: "rgba(151, 151, 151, 1)",
-    borderRadius: 10
-},
-  	subtitle: {
+    subtitle: {
     position: "absolute",
     flexShrink: 0,
     top: 14,
@@ -140,22 +149,59 @@ const styles = StyleSheet.create({
     height: 17,
     textAlign: "center",
     color: "rgba(123, 123, 123, 1)",
-    fontFamily: "Rubik",
+    fontFamily: "Mulish",
     fontSize: 14,
     fontWeight: "400",
     letterSpacing: 0.10867942869663239
 },
-  	submitButton: {
-    position: "absolute",
-    flexShrink: 0,
-    top: 545,
-    height: 50,
-    left: 100,
-    right: 99,
-    alignItems: "flex-start",
-    rowGap: 0
+    textInput: {
+      flexShrink: 0,
+      width: 330,
+      height: 50,
+      marginVertical: -10,
+      backgroundColor: "white",
+      borderWidth: 2,
+      borderColor: "balck",
+      borderRadius: 20,
 },
-  	border: {
+    identifiantLabel: {
+        // Styles du label Identifiant
+},
+// Styles pour le bouton Connexion
+    button: {
+    height: 50,
+    marginVertical: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(87, 128, 250, 1)",
+    borderRadius: 10,
+    top: 500,
+    left: 135,
+    width: 100,
+    height: 17,
+},
+    buttonText: {
+    textAlign: "center",
+    color: "white",
+    fontFamily: "Mulish",
+    fontSize: 14,
+    fontWeight: "700",
+    letterSpacing: 0.10867942869663239,
+},
+// Styles pour le bouton Créer un compte
+    buttonText2: {
+    textAlign: "center",
+    color: "white",
+    fontFamily: "Mulish",
+    fontSize: 14,
+    fontWeight: "700",
+    letterSpacing: 0.10867942869663239,
+    top: 530,
+    left: 85,
+    width: 200,
+    height: 17,
+},
+    border: {
     position: "absolute",
     flexShrink: 0,
     right: 0,
@@ -164,7 +210,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(87, 128, 250, 1)",
     borderRadius: 10
 },
-  	_title: {
+    _title: {
     position: "absolute",
     flexShrink: 0,
     top: 17,
@@ -178,7 +224,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     letterSpacing: 0.10867942869663239
 },
-  	__title: {
+    __title: {
     position: "absolute",
     flexShrink: 0,
     top: 600,
