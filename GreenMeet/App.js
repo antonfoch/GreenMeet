@@ -1,16 +1,9 @@
-<<<<<<< HEAD
 import React from 'react';
 import { View, ImageBackground, Text, StyleSheet } from 'react-native';
 import {  } from 'react-native-svg';
-=======
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import background from './assets/background.png';
->>>>>>> refs/remotes/origin/main
 
 export default function Accueil() {
   return (
-<<<<<<< HEAD
     <View style={styles.accueil}>
       <ImageBackground
         style={styles.back_acceuil}
@@ -45,12 +38,6 @@ export default function Accueil() {
       <Text style={styles.__title}>
         {`Me créer un compte`}
       </Text>
-=======
-    <View style={styles.container}>
-      <Image source={background} style={{width: 2730, height: 4096}} contentFit="cover"/>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
->>>>>>> refs/remotes/origin/main
     </View>
   );
 }
