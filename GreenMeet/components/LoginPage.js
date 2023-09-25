@@ -4,9 +4,16 @@ import { } from 'react-native-svg';
 
 const LoginPage = ({ navigation }) => {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-      <Text>Allez à la page d'inscription</Text>
-    </TouchableOpacity>
+    <View>
+      <ImageBackground source={require('../assets/back_acceuil.jpg')} />
+      <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+        <Text>Me créer un compte</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Main')}>
+        <Text>Allez à la page principale</Text>
+      </TouchableOpacity>
+    </View>
+
   );
 };
 

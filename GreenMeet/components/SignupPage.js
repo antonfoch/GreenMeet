@@ -7,7 +7,7 @@ const SignupPage = ({ navigation }) => {
     <View >
       <ImageBackground source={require('../assets/back_acceuil.jpg')} />
       <Text>GreenMeet</Text>
-      <Button title="Inscription"
+      <Button title="S'inscrire"
         onPress={() => navigation.navigate('Main')} />
     </View>
   );
