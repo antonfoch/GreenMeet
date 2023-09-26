@@ -1,17 +1,46 @@
-import "react-native-gesture-handler";
-import React from 'react';
-import { View, ImageBackground, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { } from 'react-native-svg';
+import React, { useCallback, useMemo, useRef } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import BottomSheet from '@gorhom/bottom-sheet';
 
-import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+const App = () => {
+    // ref
+    const bottomSheetRef = useRef < BottomSheet > (null);
 
+    // variables
+    const snapPoints = useMemo(() => ['25%', '50%'], []);
 
-const MainPage = () => {
+    // callbacks
+    const handleSheetChanges = useCallback((index: number) => {
+        console.log('handleSheetChanges', index);
+    }, []);
+
+    // renders
     return (
-        <View>
-            <Text>MainPage</Text>
+        <View style={styles.container}>
+            <BottomSheet
+                ref={bottomSheetRef}
+                index={1}
+                snapPoints={snapPoints}
+                onChange={handleSheetChanges}
+            >
+                <View style={styles.contentContainer}>
+                    <Text>Awesome 🎉</Text>
+                </View>
+            </BottomSheet>
         </View>
     );
 };
 
-export default MainPage;
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 24,
+        backgroundColor: 'grey',
+    },
+    contentContainer: {
+        flex: 1,
+        alignItems: 'center',
+    },
+});
+
+export default App;
