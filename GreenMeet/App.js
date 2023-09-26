@@ -1,71 +1,151 @@
-import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Image, TouchableOpacity, TextInput, Text } from 'react-native';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
-import Btn_loc from './assets/ic_loc.png'; // Importez Ic_loc depuis le fichier approprié
-import Ic_gesture from './assets/ic_gesture.png'; // Importez Ic_gesture depuis le fichier approprié
-import Ic_menu from './assets/ic_menu.png'; // Importez Ic_menu depuis le fichier approprié
+export function Home() {
+    const [extended, setExtended] = useState(false);
 
-export default function Home() {
+    const toggleExtension = () => {
+        setExtended(!extended);
+    };
+
+    const onGestureEvent = ({ nativeEvent }) => {
+        if (nativeEvent.state === State.ACTIVE) {
+            // Le bouton est en cours de glissement, déterminez la direction ici
+            if (nativeEvent.translationY < 0) {
+                // Le bouton est glissé vers le haut
+                setExtended(true);
+            } else {
+                // Le bouton est glissé vers le bas
+                setExtended(false);
+            }
+        }
+    };
+
     return (
-        <View style={styles.container}>
-            <Image source={Btn_loc} style={styles.btnLocImage} /> {/* Utilisez l'image Ic_loc */}
-            <View style={styles.btn_loc}>
-                {/* ... Autres éléments ... */}
-            </View>
-            {/* ... Autres éléments ... */}
-            
-            <Image source={Ic_gesture} style={styles.icGestureImage} /> {/* Utilisez l'image Ic_gesture */}
-            
-            <View style={styles.navbar_x}>
-                <View style={styles.navbtn}>
-                    <Image source={Ic_menu} style={styles.icMenuImage} /> {/* Utilisez l'image Ic_menu */}
+        <View style={styles.root}>
+            <View style={styles.content}>
+                <View style={styles.navBtn}>
+                    <Image source={require('./assets/Ellipse.png')} style={styles.ellipse} />
+                    <View style={styles.overlay}>
+                        <Image source={require('./assets/ic_menu.png')} style={styles.menuIcon} />
+                    </View>
+                    <Image source={require('./assets/ic_loc.png')} style={styles.loc} />
                 </View>
+                {/* Contenu principal de la page */}
             </View>
-            
-            {/* Rectangle 1223 */}
-            <View style={styles.rectangle1223}>
-                <Text style={styles.rechercherdansGreenMeet}>
-                    {`Rechercher dans GreenMeet`}
-                </Text>
+            <View style={styles.bottomBar}>
+                <TextInput
+                    placeholder="Rechercher..."
+                    style={styles.searchBar}
+                />
+                <PanGestureHandler onGestureEvent={onGestureEvent}>
+                    <TouchableOpacity
+                        style={styles.addButton}
+                        onPress={toggleExtension}
+                    >
+                        <Image source={require('./assets/ic_gesture.png')} style={styles.addButtonIcon} />
+                    </TouchableOpacity>
+                </PanGestureHandler>
             </View>
+
+            {/* Contenu supplémentaire lorsque la barre est étendue */}
+            {extended && (
+                <View style={styles.extensionContent}>
+                    <Text>Contenu supplémentaire</Text>
+                    {/* Ajoutez ici le contenu supplémentaire lorsque la barre est étendue */}
+                </View>
+            )}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    root: {
+        height: 844,
+        width: 390,
+        backgroundColor: '#42B6A0',
+    },
+    content: {
         flex: 1,
+    },
+    image: {
+        width: 36,
+        height: 36,
+        flexShrink: 0,
+    },
+    ellipse: {
+        width: 70,
+        height: 70,
+        flexShrink: 0,
+    },
+    loc: {
+        width: 50,
+        height: 50,
+        top: 550,
+        left: 300,
+        flexShrink: 0,
+    },
+    navBtn: {
+        width: 37,
+        height: 32,
+        top: 20,
+        left: 0,
+        right: 20,
+        flexShrink: 0,
+        position: 'relative',
+    },
+    overlay: {
+        position: 'absolute',
+        top: 15,
+        left: 17,
+        width: '100%',
+        height: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
-    btnLocImage: {
-        width: 100,
-        height: 100,
-        marginBottom: 10,
+    menuIcon: {
+        width: 40,
+        height: 40,
+        flexShrink: 0,
     },
-    icGestureImage: {
-        width: 50,
-        height: 50,
-        marginBottom: 10,
-    },
-    icMenuImage: {
-        width: 50,
-        height: 50,
-        marginBottom: 10,
-    },
-    rectangle1223: {
-        width: 303,
-        height: 37,
-        backgroundColor: "rgba(217, 217, 217, 1)",
+    bottomBar: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        top: 20,
+        padding: 25,
+        paddingHorizontal: 30,
         borderRadius: 20,
-        alignItems: 'center',
+    },
+    searchBar: {
+        flex: 1,
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 40, // Ajustez la valeur du rayon pour rendre la searchBar arrondie
+        marginRight: -50,
+        paddingHorizontal: 10,
+    },
+    addButtonIcon: {
+        width: 50,
+        height: 10,
+        top: -30,
+        left: -155,
+        borderRadius: 20,
         justifyContent: 'center',
-        position: 'relative', // Ajoutez cette ligne pour permettre le positionnement absolu
     },
-    rechercherdansGreenMeet: {
-        fontSize: 15,
-        fontFamily: 'Mulish',
-        textAlign: "center",
+    extensionContent: {
+        backgroundColor: 'white',
+        paddingHorizontal: 'auto',
+        paddingVertical:50,
     },
-    // Ajoutez d'autres styles selon vos besoins
+    buttonAboveNavBar: {
+        position: 'absolute',
+        top: -40, // Ajustez la position verticale selon vos besoins
+        left: 10, // Ajustez la position horizontale selon vos besoins
+        zIndex: 1, // Assurez-vous que le bouton est affiché au-dessus de la barre de navigation
+    },
 });
+
+export default Home;
