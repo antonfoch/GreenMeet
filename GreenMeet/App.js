@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import { View, Image, Text, StyleSheet } from 'react-native';
 
 import Btn_loc from './assets/components/ic_loc.png'; // Importez Ic_loc depuis le fichier approprié
@@ -69,3 +70,12 @@ const styles = StyleSheet.create({
     },
     // Ajoutez d'autres styles selon vos besoins
 });
+=======
+import AppNavigator from './components/AppNavigator';
+
+const App = () => {
+  return <AppNavigator />;
+};
+
+export default App;
+>>>>>>> 79371316d13e7c09bc5243ca75fbdaa2b88fd621
