@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, TextInput, Text } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
@@ -149,3 +150,13 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
+=======
+import React from 'react';
+import AppNavigator from './components/AppNavigator';
+
+const App = () => {
+  return <AppNavigator />;
+};
+
+export default App;
+>>>>>>> 2e3c887a8362fe5bf4621936064c0a5be10c84de
