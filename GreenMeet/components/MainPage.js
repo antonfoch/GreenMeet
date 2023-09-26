@@ -26,9 +26,17 @@ export function Home() {
         <View style={styles.root}>
             <View style={styles.content}>
                 <View style={styles.navBtn}>
-                    <Image source={require('../assets/Ellipse.png')} style={styles.ellipse} />
+                    <TouchableOpacity onPress={() => {
+                        // Ajoutez ici l'action que vous souhaitez exécuter lors du clic
+                    }}>
+                        <Image source={require('../assets/Ellipse.png')} style={styles.ellipse} />
+                    </TouchableOpacity>
                     <View style={styles.overlay}>
-                        <Image source={require('../assets/ic_menu.png')} style={styles.menuIcon} />
+                        <TouchableOpacity onPress={() => {
+                            // Ajoutez ici l'action que vous souhaitez exécuter lors du clic
+                        }}>
+                            <Image source={require('../assets/ic_menu.png')} style={styles.menuIcon} />
+                        </TouchableOpacity>
                     </View>
                     <Image source={require('../assets/ic_loc.png')} style={styles.loc} />
                 </View>
@@ -77,13 +85,7 @@ const styles = StyleSheet.create({
     ellipse: {
         width: 70,
         height: 70,
-        flexShrink: 0,
-    },
-    loc: {
-        width: 50,
-        height: 50,
-        top: 550,
-        left: 300,
+        top: 30,
         flexShrink: 0,
     },
     navBtn: {
@@ -94,6 +96,13 @@ const styles = StyleSheet.create({
         right: 20,
         flexShrink: 0,
         position: 'relative',
+    },
+    loc: {
+        width: 70,
+        height: 70,
+        top: 600,
+        left: 300,
+        flexShrink: 0,
     },
     overlay: {
         position: 'absolute',
@@ -107,16 +116,18 @@ const styles = StyleSheet.create({
     menuIcon: {
         width: 40,
         height: 40,
+        top: 30,
         flexShrink: 0,
     },
     bottomBar: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#fff',
-        top: 20,
+        marginTop: 20,
         padding: 25,
         paddingHorizontal: 30,
-        borderRadius: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     },
     searchBar: {
         flex: 1,
@@ -131,14 +142,14 @@ const styles = StyleSheet.create({
         width: 50,
         height: 10,
         top: -30,
-        left: -155,
+        left: -145,
         borderRadius: 20,
         justifyContent: 'center',
     },
     extensionContent: {
         backgroundColor: 'white',
         paddingHorizontal: 'auto',
-        paddingVertical: 50,
+        paddingVertical: 100,
     },
     buttonAboveNavBar: {
         position: 'absolute',
