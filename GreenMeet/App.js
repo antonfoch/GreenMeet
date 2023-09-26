@@ -1,10 +1,9 @@
 import React from 'react';
-<<<<<<< HEAD
 import { View, Image, Text, StyleSheet } from 'react-native';
 
-import Btn_loc from './assets/components/ic_loc.png'; // Importez Ic_loc depuis le fichier approprié
-import Ic_gesture from './assets/components/ic_gesture.png'; // Importez Ic_gesture depuis le fichier approprié
-import Ic_menu from './assets/components/ic_menu.png'; // Importez Ic_menu depuis le fichier approprié
+import Btn_loc from './assets/ic_loc.png'; // Importez Ic_loc depuis le fichier approprié
+import Ic_gesture from './assets/ic_gesture.png'; // Importez Ic_gesture depuis le fichier approprié
+import Ic_menu from './assets/ic_menu.png'; // Importez Ic_menu depuis le fichier approprié
 
 export default function Home() {
     return (
@@ -70,12 +69,3 @@ const styles = StyleSheet.create({
     },
     // Ajoutez d'autres styles selon vos besoins
 });
-=======
-import AppNavigator from './components/AppNavigator';
-
-const App = () => {
-  return <AppNavigator />;
-};
-
-export default App;
->>>>>>> 79371316d13e7c09bc5243ca75fbdaa2b88fd621
