@@ -1,28 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { View, ImageBackground, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, ImageBackground, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
+import loginData from './users.json'
 
 export default function Accueil() {
-  const [identifiant, setIdentifiant] = useState('');
-  const [motDePasse, setMotDePasse] = useState('');
+  const [username, onUserNameChangeText] = React.useState(loginData.username);
+  const [password, onPasswordChangeText] = React.useState(loginData.password);
   const navigation = useNavigation();
 
   const handleConnexion = () => {
-    // Gérer l'action lors de l'appui sur le bouton Connexion
-    console.log('Identifiant:', identifiant);
-    console.log('Mot de passe:', motDePasse);
+
+    const validUser = loginData.users.some(
+      user => user.username === username && user.password === password
+    );
+
+    if (validUser) {
+      console.log('Connexion réussie!');
+      navigation.navigate('Main');
+    } else {
+      console.log('Identifiant ou mot de passe incorrect');
+      Alert.alert('Erreur', 'Identifiant ou mot de passe incorrect');
+
+    }
   };
+
 
   return (
     <View style={styles.accueil}>
       <ImageBackground
         style={styles.back_acceuil}
-        source={require('../assets/background.png')}
+        source={require('../assets/back_acceuil.jpg')}
       />
       <ImageBackground
         style={styles.logo}
-        source={require('../assets/image34.png')}
+        source={require('../assets/image 34.png')}
       />
       <View style={styles.container}>
         <Text style={[styles.customFontText, { fontFamily: 'Mulish-Bold' }]}>
@@ -34,8 +46,8 @@ export default function Accueil() {
         <TextInput
           style={styles.textInput}
           placeholder="Saisissez votre identifiant"
-          onChangeText={text => setIdentifiant(text)}
-          value={identifiant}
+          onChangeText={text => onUserNameChangeText(text)}
+          value={username}
         />
       </View>
       <View style={styles.group6}>
@@ -44,8 +56,8 @@ export default function Accueil() {
           style={styles.textInput}
           placeholder="Saisissez votre mot de passe"
           secureTextEntry={true} // Pour masquer le texte du mot de passe
-          onChangeText={text => setMotDePasse(text)}
-          value={motDePasse}
+          onChangeText={text => onPasswordChangeText(text)}
+          value={password}
         />
       </View>
       {/* Bouton Connexion */}
