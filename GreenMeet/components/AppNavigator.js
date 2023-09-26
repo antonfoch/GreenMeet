@@ -11,16 +11,8 @@ import Profile from './Profile/Profile'
 import Settings from './Profile/Settings'
 
 const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
 
 
-const MainNavigator = () => {
-  return (
-    <Drawer.Navigator useLegacyImplementation initialRouteName="Login">
-      <Drawer.Screen name="Profile" component={Profile} />
-    </Drawer.Navigator>
-  );
-};
 
 const AppNavigator = () => {
   return (
