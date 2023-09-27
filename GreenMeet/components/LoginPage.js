@@ -30,11 +30,11 @@ export default function Accueil() {
     <View style={styles.accueil}>
       <ImageBackground
         style={styles.back_acceuil}
-        source={require('../assets/back_acceuil.jpg')}
+        source={require('../assets/background.png')}
       />
       <ImageBackground
         style={styles.logo}
-        source={require('../assets/image 34.png')}
+        source={require('../assets/image34.png')}
       />
       <View style={styles.container}>
         <Text style={[styles.customFontText, { fontFamily: 'Mulish-Bold' }]}>
