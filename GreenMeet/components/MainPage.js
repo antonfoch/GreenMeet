@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, TextInput, Text } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import MapView, { Marker } from 'react-native-maps'
+import MapData from './jardins-partages.json'
 
 export function Home() {
     const [extended, setExtended] = useState(false);
@@ -11,37 +13,54 @@ export function Home() {
 
     const onGestureEvent = ({ nativeEvent }) => {
         if (nativeEvent.state === State.ACTIVE) {
-            // Le bouton est en cours de glissement, déterminez la direction ici
             if (nativeEvent.translationY < 0) {
-                // Le bouton est glissé vers le haut
                 setExtended(true);
             } else {
-                // Le bouton est glissé vers le bas
                 setExtended(false);
             }
         }
     };
+
 
     return (
         <View style={styles.root}>
             <View style={styles.content}>
                 <View style={styles.navBtn}>
                     <TouchableOpacity onPress={() => {
-                        // Ajoutez ici l'action que vous souhaitez exécuter lors du clic
                     }}>
                         <Image source={require('../assets/Ellipse.png')} style={styles.ellipse} />
                     </TouchableOpacity>
                     <View style={styles.overlay}>
                         <TouchableOpacity onPress={() => {
-                            // Ajoutez ici l'action que vous souhaitez exécuter lors du clic
                         }}>
                             <Image source={require('../assets/ic_menu.png')} style={styles.menuIcon} />
                         </TouchableOpacity>
                     </View>
                     <Image source={require('../assets/ic_loc.png')} style={styles.loc} />
                 </View>
-                {/* Contenu principal de la page */}
             </View>
+            <MapView
+                style={{ flex: 1 }}
+                initialRegion={{
+                    latitude: 48.8534,
+                    longitude: 2.3488,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }}
+            >
+                {MapData.map((jardin, index) => (
+                    <Marker
+                        key={index}
+                        coordinate={{
+                            latitude: jardin.geo_point_2d.lat,
+                            longitude: jardin.geo_point_2d.lon
+                        }}
+                        title={jardin.nom_ev}
+                        description={jardin.adresse}
+                    />
+                ))}
+            </MapView>
+
             <View style={styles.bottomBar}>
                 <TextInput
                     placeholder="Rechercher..."
@@ -57,11 +76,9 @@ export function Home() {
                 </PanGestureHandler>
             </View>
 
-            {/* Contenu supplémentaire lorsque la barre est étendue */}
             {extended && (
                 <View style={styles.extensionContent}>
                     <Text>Contenu supplémentaire</Text>
-                    {/* Ajoutez ici le contenu supplémentaire lorsque la barre est étendue */}
                 </View>
             )}
         </View>
