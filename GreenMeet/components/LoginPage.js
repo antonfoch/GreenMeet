@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, ImageBackground, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import * as Font from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import loginData from './users.json'
+import { UserContext } from './MainPage/UserContext';
 
 export default function Accueil() {
   const [username, onUserNameChangeText] = React.useState(loginData.username);
   const [password, onPasswordChangeText] = React.useState(loginData.password);
   const navigation = useNavigation();
+  const { setCurrentUser } = useContext(UserContext);
 
   const handleConnexion = () => {
 
-    const validUser = loginData.users.some(
-      user => user.username === username && user.password === password
-    );
-
-    if (validUser) {
+    const user = loginData.users.find(user => user.username === username && user.password === password);
+    if (user) {
       console.log('Connexion réussie!');
+      setCurrentUser(user.username);
       navigation.navigate('Main');
     } else {
       console.log('Identifiant ou mot de passe incorrect');
