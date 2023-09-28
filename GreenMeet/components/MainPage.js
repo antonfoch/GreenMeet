@@ -39,7 +39,7 @@ export function Home() {
     return (
         <View style={styles.root}>
             <MapView
-                style={{ flex: 1 }} // Utilisez flex: 1 pour que la carte prenne tout l'écran disponible
+                style={{ flex: 1 }}
                 initialRegion={{
                     latitude: 48.8534,
                     longitude: 2.3488,
@@ -65,7 +65,7 @@ export function Home() {
                         position: 'absolute',
                         top: 0,
                         left: 0,
-                        width:  '70%',
+                        width: '70%',
                         height: '100%',
                         backgroundColor: 'white',
                         transform: [{
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     loc: {
         width: 70,
         height: 70,
-        top: 600, 
+        top: 600,
         left: 300,
         flexShrink: 0,
     },

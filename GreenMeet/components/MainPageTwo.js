@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, TextInput, Text, Animated, Dimension } from 'react-native';
-import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
-import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import MapView, { Marker } from 'react-native-maps'
 import MapData from './jardins-partages.json'
-import { UserContext } from './MainPage/UserContext';
 import BottomSheet from '@gorhom/bottom-sheet';
 
 export default function MainPageTwo() {
@@ -88,7 +85,7 @@ export default function MainPageTwo() {
                                 style={styles.searchBar}
                                 value={searchQuery}
                                 onChangeText={text => handleSearch(text)}
-                                onFocus={() => bottomSheetRef.current?.snapToIndex(1)}   
+                                onFocus={() => bottomSheetRef.current?.snapToIndex(1)}
                             />
                             {searchQuery.trim() !== "" && filteredJardins.map((jardin, index) => (
                                 <TouchableOpacity key={index} onPress={() => handleMarkerPress(jardin)}>
