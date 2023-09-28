@@ -7,7 +7,7 @@ import SignupPage from './SignupPage';
 import MainPage from './MainPage';
 import CreateEvent from './Profile/CreateEvent'
 import Profile from './Profile/Profile'
-import Settings from './Profile/Settings'
+import Settings from './Setting';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +19,7 @@ const AppNavigator = () => {
         <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginPage} />
         <Stack.Screen options={{ headerShown: false }} name="Signup" component={SignupPage} />
         <Stack.Screen options={{ headerShown: false }} name="Main" component={MainPage} />
+        <Stack.Screen options={{ headerShown: false }} name="Settings" component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
   );

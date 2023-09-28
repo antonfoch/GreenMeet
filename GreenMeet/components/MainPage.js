@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, TextInput, Text } from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 export function Home() {
     const [extended, setExtended] = useState(false);
+    const navigation = useNavigation();
 
     const toggleExtension = () => {
         setExtended(!extended);
@@ -34,8 +36,9 @@ export function Home() {
                     <View style={styles.overlay}>
                         <TouchableOpacity onPress={() => {
                             // Ajoutez ici l'action que vous souhaitez exécuter lors du clic
+                            navigation.navigate('Settings');
                         }}>
-                            <Image source={require('../assets/ic_menu.png')} style={styles.menuIcon} />
+                            <Image source={require('../assets/Setting.png')} style={styles.menuIcon} />
                         </TouchableOpacity>
                     </View>
                     <Image source={require('../assets/ic_loc.png')} style={styles.loc} />
@@ -114,8 +117,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     menuIcon: {
-        width: 40,
-        height: 40,
+        width: 20,
+        height: 20,
         top: 30,
         flexShrink: 0,
     },
