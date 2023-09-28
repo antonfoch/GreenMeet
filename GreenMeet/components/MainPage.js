@@ -39,7 +39,7 @@ export function Home() {
     return (
         <View style={styles.root}>
             <MapView
-                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                style={{ flex: 1 }} // Utilisez flex: 1 pour que la carte prenne tout l'écran disponible
                 initialRegion={{
                     latitude: 48.8534,
                     longitude: 2.3488,
@@ -65,7 +65,7 @@ export function Home() {
                         position: 'absolute',
                         top: 0,
                         left: 0,
-                        width: '70%',
+                        width:  '70%',
                         height: '100%',
                         backgroundColor: 'white',
                         transform: [{
@@ -93,7 +93,6 @@ export function Home() {
                             <Image source={require('../assets/ic_menu.png')} style={styles.menuIcon} />
                         </TouchableOpacity>
                     </View>
-                    <Image source={require('../assets/ic_loc.png')} style={styles.loc} />
                 </View>
             </View>
 
@@ -124,16 +123,10 @@ export function Home() {
 
 const styles = StyleSheet.create({
     root: {
-        flex: 1, // Utilise tout l'espace disponible en hauteur et en largeur
-        backgroundColor: '#42B6A0',
+        flex: 1,
     },
     content: {
         flex: 1,
-    },
-    image: {
-        width: 36,
-        height: 36,
-        flexShrink: 0,
     },
     ellipse: {
         width: 70,

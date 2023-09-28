@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import LoginPage from './LoginPage';
 import SignupPage from './SignupPage';
+import MainPageTwo from './MainPageTwo';
 import MainPage from './MainPage';
 import CreateEvent from './Profile/CreateEvent'
 import Profile from './Profile/Profile'
@@ -16,8 +17,8 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginPage} />
-        <Stack.Screen options={{ headerShown: false }} name="Signup" component={SignupPage} />
+        {/* <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginPage} /> */}
+        {/* <Stack.Screen options={{ headerShown: false }} name="Signup" component={SignupPage} /> */}
         <Stack.Screen options={{ headerShown: false }} name="Main" component={MainPage} />
       </Stack.Navigator>
     </NavigationContainer>
