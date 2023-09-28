@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     loc: {
         width: 70,
         height: 70,
-        top: 600,
+        top: 600, 
         left: 300,
         flexShrink: 0,
     },

@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginPage from './LoginPage';
 import SignupPage from './SignupPage';
 import MainPageTwo from './MainPageTwo';
-import MainPage from './MainPage';
+import MainPage from './MainPageTwo';
 import CreateEvent from './Profile/CreateEvent'
 import Profile from './Profile/Profile'
 import Settings from './Profile/Settings'
