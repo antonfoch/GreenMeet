@@ -38,6 +38,19 @@ export function Home() {
 
     return (
         <View style={styles.root}>
+            <TouchableOpacity onPress={() => {
+                // Ajoutez ici l'action que vous souhaitez exécuter lors du clic
+            }}>
+                <Image source={require('../assets/Ellipse.png')} style={styles.ellipse} />
+            </TouchableOpacity>
+            <View style={styles.overlay}>
+                <TouchableOpacity onPress={() => {
+                    // Ajoutez ici l'action que vous souhaitez exécuter lors du clic
+                    navigation.navigate('Settings');
+                }}>
+                    <Image source={require('../assets/Setting.png')} style={styles.menuIcon} />
+                </TouchableOpacity>
+            </View>
             <MapView
                 style={{ flex: 1 }}
                 initialRegion={{
@@ -217,7 +230,28 @@ const styles = StyleSheet.create({
         elevation: 5,
         borderTopRightRadius: 15,
         borderBottomRightRadius: 15
-    }
+    },
+    overlay: {
+        position: 'absolute',
+        top: 15,
+        left: 17,
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    menuIcon: {
+        width: 20,
+        height: 20,
+        top: 30,
+        flexShrink: 0,
+    },
+    ellipse: {
+        width: 70,
+        height: 70,
+        top: 30,
+        flexShrink: 0,
+    },
 });
 
 export default Home;

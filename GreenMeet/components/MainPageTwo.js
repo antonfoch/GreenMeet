@@ -83,6 +83,14 @@ export default function MainPageTwo() {
 
     return (
         <View style={styles.root}>
+            <View style={styles.overlay}>
+                <TouchableOpacity onPress={() => {
+                    // Ajoutez ici l'action que vous souhaitez exécuter lors du clic
+                    navigation.navigate('Settings');
+                }}>
+                    <Image source={require('../assets/Setting.png')} style={styles.menuIcon} />
+                </TouchableOpacity>
+            </View>
             <MapView
                 ref={mapViewRef}
                 style={{ flex: 1 }}
@@ -315,5 +323,25 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
-
+    overlay: {
+        position: 'absolute',
+        top: 15,
+        left: 17,
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    menuIcon: {
+        width: 20,
+        height: 20,
+        top: 30,
+        flexShrink: 0,
+    },
+    ellipse: {
+        width: 70,
+        height: 70,
+        top: 30,
+        flexShrink: 0,
+    },
 });
