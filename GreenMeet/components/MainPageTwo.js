@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, TextInput, Text, Animated, Dimension } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, TextInput, Text, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps'
 import MapData from './jardins-partages.json'
 import BottomSheet from '@gorhom/bottom-sheet';
 import { UserContext } from './MainPage/UserContext';
+import { ScrollView } from 'react-native';
+
 
 export default function MainPageTwo() {
     const [selectedJardin, setSelectedJardin] = useState(null);
@@ -17,15 +19,24 @@ export default function MainPageTwo() {
     const [eventDescription, setEventDescription] = useState("");
     const [jardinsData, setJardinsData] = useState(MapData);
     const { currentUser } = useContext(UserContext);
-
+    const mapViewRef = useRef(null);
     const bottomSheetRef = useRef(null);
 
     const handleMarkerPress = (jardin) => {
         setSelectedJardin(jardin);
-        setEvents(jardin.evenements || []);
+        const selectedJardinEvents = jardinsData.find(j => j.nom_ev === jardin.nom_ev)?.evenements || [];
+        setEvents(selectedJardinEvents);
         setShowDetails(true);
         bottomSheetRef.current?.snapToIndex(1);
+
+        mapViewRef.current.animateToRegion({
+            latitude: jardin.geo_point_2d.lat,
+            longitude: jardin.geo_point_2d.lon,
+            latitudeDelta: 0.00922,
+            longitudeDelta: 0.00421
+        }, 1000);
     };
+
 
 
     const addEvent = () => {
@@ -46,11 +57,13 @@ export default function MainPageTwo() {
             return jardin;
         });
         setJardinsData(updatedJardins);
+        setEvents(prevEvents => [...prevEvents, newEvent]);
 
         setEventTitle("");
         setEventDate("");
         setEventTime("");
         setEventDescription("");
+        Alert.alert("Succès", "L'événement a été ajouté avec succès!");
     };
 
 
@@ -71,6 +84,7 @@ export default function MainPageTwo() {
     return (
         <View style={styles.root}>
             <MapView
+                ref={mapViewRef}
                 style={{ flex: 1 }}
                 initialRegion={{
                     latitude: 48.8534,
@@ -95,7 +109,7 @@ export default function MainPageTwo() {
             <BottomSheet
                 ref={bottomSheetRef}
                 index={0}
-                snapPoints={['25%', '50%', '100%']}
+                snapPoints={['25%', '50%', '96%']}
                 enablePanDownToClose={false}
                 onChange={(index) => {
                     if (index === -1) {
@@ -103,74 +117,85 @@ export default function MainPageTwo() {
                         setShowDetails(false);
                     }
                 }}
+                style={styles.bottomSheet}
             >
-                <View style={styles.contentContainer}>
-                    {showDetails ? (
-                        <>
-                            <Text>{selectedJardin.nom_ev}</Text>
-                            <Text>{selectedJardin.adresse}</Text>
-                            {events.map((event, idx) => (
-                                <View key={idx}>
-                                    <Text>{event.titre}</Text>
-                                    <Text>{event.date} à {event.heure}</Text>
-                                    <Text>{event.description}</Text>
-                                    <Text>Ajouté par: {currentUser}</Text>
+                <ScrollView style={{ flex: 1, backgroundColor: '#86b36a' }}>
+                    <View style={styles.contentContainer}>
+                        {showDetails ? (
+                            <>
+                                <View style={styles.leftside} >
+                                    <Text style={styles.nom} >{selectedJardin.nom_ev}</Text>
+                                    <Text style={styles.adresse} >{selectedJardin.adresse}</Text>
+                                    <Text style={styles.evenement} >Évènements</Text>
                                 </View>
-                            ))}
-                            <TextInput
-                                placeholder="Titre de l'événement"
-                                value={eventTitle}
-                                onChangeText={setEventTitle}
-                                style={styles.eventInput}
-                            />
-                            <TextInput
-                                placeholder="Date (ex: 2023-10-01)"
-                                value={eventDate}
-                                onChangeText={setEventDate}
-                                style={styles.eventInput}
-                            />
-                            <TextInput
-                                placeholder="Heure (ex: 15:00)"
-                                value={eventTime}
-                                onChangeText={setEventTime}
-                                style={styles.eventInput}
-                            />
-                            <TextInput
-                                placeholder="Description"
-                                value={eventDescription}
-                                onChangeText={setEventDescription}
-                                style={styles.eventInput}
-                            />
 
-                            <TouchableOpacity onPress={addEvent} style={styles.addButton}>
-                                <Text style={styles.addButtonText}>Ajouter l'événement</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => setShowDetails(false)}>
-                                <Text>Retour à la recherche</Text>
-                            </TouchableOpacity>
-                        </>
-                    ) : (
-                        <>
-                            <TextInput
-                                placeholder="Rechercher un jardin..."
-                                style={styles.searchBar}
-                                value={searchQuery}
-                                onChangeText={text => handleSearch(text)}
-                                onFocus={() => bottomSheetRef.current?.snapToIndex(1)}
-                            />
-                            {searchQuery.trim() !== "" && filteredJardins.map((jardin, index) => (
-                                <TouchableOpacity key={index} onPress={() => handleMarkerPress(jardin)} style={styles.gardenItem}>
-                                    <Text style={styles.gardenTitle}>{jardin.nom_ev}</Text>
-                                    <Text style={styles.subText}>{jardin.adresse}</Text>
+                                {events.map((event, idx) => (
+                                    <View style={styles.createevent} key={idx}>
+                                        <View style={styles.eventHeader}>
+                                            <Text style={styles.eventtitre}>{event.titre}</Text>
+                                            <Text style={styles.userevent}>Ajouté par: {currentUser}</Text>
+                                        </View>
+                                        <Text style={styles.eventdate}>{event.date} à {event.heure}</Text>
+                                        <Text style={styles.textdescription}>Description</Text>
+                                        <Text style={styles.eventdescription}>{event.description}</Text>
+                                    </View>
+                                ))}
+                                <TextInput
+                                    placeholder="Titre de l'événement"
+                                    value={eventTitle}
+                                    onChangeText={setEventTitle}
+                                    style={styles.eventInput}
+                                />
+                                <TextInput
+                                    placeholder="Date (ex: 2023-10-01)"
+                                    value={eventDate}
+                                    onChangeText={setEventDate}
+                                    style={styles.eventInput}
+                                />
+                                <TextInput
+                                    placeholder="Heure (ex: 15:00)"
+                                    value={eventTime}
+                                    onChangeText={setEventTime}
+                                    style={styles.eventInput}
+                                />
+                                <TextInput
+                                    placeholder="Description"
+                                    value={eventDescription}
+                                    onChangeText={setEventDescription}
+                                    style={styles.eventInput}
+                                />
+
+                                <TouchableOpacity onPress={addEvent} style={styles.addButton}>
+                                    <Text style={styles.addButtonText}>Ajouter l'événement</Text>
                                 </TouchableOpacity>
-                            ))}
-                        </>
-                    )}
-                </View>
+                                <TouchableOpacity onPress={() => setShowDetails(false)}>
+                                    <Text>Retour à la recherche</Text>
+                                </TouchableOpacity>
+                            </>
+                        ) : (
+                            <>
+                                <TextInput
+                                    placeholder="Rechercher un jardin..."
+                                    style={styles.searchBar}
+                                    value={searchQuery}
+                                    onChangeText={text => handleSearch(text)}
+                                    onFocus={() => bottomSheetRef.current?.snapToIndex(1)}
+                                />
+                                <ScrollView style={styles.searchResultsContainer}>
+                                    {searchQuery.trim() !== "" && filteredJardins.map((jardin, index) => (
+                                        <TouchableOpacity key={index} onPress={() => handleMarkerPress(jardin)} style={styles.gardenItem}>
+                                            <Text style={styles.gardenTitle}>{jardin.nom_ev}</Text>
+                                            <Text style={styles.subText}>{jardin.adresse}</Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </ScrollView>
+                            </>
+                        )}
+                    </View>
+                </ScrollView>
+
 
             </BottomSheet>
-
-
         </View>
     );
 }
@@ -184,8 +209,12 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         padding: 16,
-        backgroundColor: 'white'
     },
+
+    leftside: {
+        width: '100%',
+    },
+
     subText: {
         fontSize: 12,
         color: 'gray',
@@ -202,7 +231,7 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 10,
         borderRadius: 5,
-        backgroundColor: '#e9e9e9',
+        backgroundColor: 'white',
         marginBottom: 10
     },
     addButton: {
@@ -226,5 +255,65 @@ const styles = StyleSheet.create({
     gardenTitle: {
         fontWeight: 'bold',
         marginBottom: 5
-    }
+    },
+
+    nom: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color: 'white'
+    },
+    adresse: {
+        fontSize: 18,
+        color: '#CACACA',
+        marginBottom: 10
+    },
+    evenement: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        color: 'white'
+    },
+    createevent: {
+        width: 342, // Set to your desired width
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 15,
+        marginTop: 10,
+        marginBottom: 30,
+    },
+    eventtitre: {
+        fontSize: 20,
+        fontWeight: 'semibold',
+        color: 'black'
+    },
+    eventdate: {
+        fontSize: 15,
+        color: '#979797',
+        marginBottom: 10
+    },
+
+    textdescription: {
+        fontSize: 17,
+        color: 'black'
+    },
+
+    eventdescription: {
+        fontSize: 18,
+
+        color: '#979797'
+    },
+
+    userevent: {
+        fontSize: 16,
+        marginBottom: 10,
+        color: '#979797'
+    },
+    eventHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        alignItems: 'center',
+    },
+
 });
